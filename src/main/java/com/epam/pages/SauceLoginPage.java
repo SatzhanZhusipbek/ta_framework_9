@@ -1,89 +1,61 @@
 package com.epam.pages;
 
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
+
+import com.codeborne.selenide.SelenideElement;
+import com.epam.model.User;
 import com.epam.utils.ConfigManager;
 import java.time.Duration;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SauceLoginPage extends SauceBasePage{
 
   private static final Logger logger = LoggerFactory.getLogger(SauceLoginPage.class);
-
-  @FindBy(xpath = "//input[@id='user-name']")
-  WebElement usernameInput;
-  @FindBy(xpath = "//input[@id='password']")
-  WebElement passwordInput;
-  @FindBy(xpath = "//input[@id='login-button']")
-  WebElement loginButton;
-  @FindBy(xpath = "//div[@class='error-message-container error']")
-  WebElement errorMessage;
-
-  public SauceLoginPage(WebDriver driver) {
-    super(driver);
-  }
+  private final SelenideElement usernameInput = $("#user-name");
+  private final SelenideElement passwordInput = $("#password");
+  private final SelenideElement loginButton = $("#login-button");
+  private final SelenideElement errorMessage = $(".error-message-container.error");
 
   public void openPage() {
-    driver.get("https://www.saucedemo.com");
+    open(ConfigManager.get("baseUrl"));
     logger.info("Navigated to Login Page");
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    wait.until(ExpectedConditions.visibilityOf(usernameInput));
-    driver.manage().window().maximize();
-    logger.info("Browser window maximized");
+    usernameInput.shouldBe(visible);
   }
 
   public void typeAnyCred() {
-    String username = ConfigManager.get("username");
-    String password = ConfigManager.get("password");
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-    wait.until(ExpectedConditions.visibilityOf(usernameInput));
+    User anyUser = new User(ConfigManager.get("username"), ConfigManager.get("password"));
+    usernameInput.shouldBe(visible).setValue(anyUser.getUsername());
     highlightElement(usernameInput);
-    usernameInput.sendKeys(Keys.CONTROL + "a");
-    usernameInput.sendKeys(Keys.DELETE);
-    usernameInput.sendKeys(username);
-
-    wait.until(ExpectedConditions.visibilityOf(passwordInput));
+    usernameInput.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+    usernameInput.sendKeys(Keys.BACK_SPACE);
+    passwordInput.shouldBe(visible).setValue(anyUser.getPassword());
     highlightElement(passwordInput);
-    passwordInput.sendKeys(Keys.CONTROL + "a");
-    passwordInput.sendKeys(Keys.DELETE);
-    passwordInput.sendKeys(password);
-
-    logger.info("Entered credentials: Username = {}, Password = [HIDDEN]", username);
+    logger.info("Entered credentials: Username = {}, Password = [HIDDEN]", anyUser.getUsername());
   }
 
   public SauceInventoryPage pressLoginButton() {
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    wait.until(ExpectedConditions.elementToBeClickable(loginButton));
-
     highlightElement(loginButton);
-    loginButton.click();
-
+    loginButton.shouldBe(visible).click();
     logger.info("Clicked Login Button");
-    return new SauceInventoryPage(driver);
+    return new SauceInventoryPage();
   }
 
   public String getErrorMessage() {
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    wait.until(ExpectedConditions.visibilityOf(errorMessage));
-    String errorText = errorMessage.getText();
+    String errorText = errorMessage.shouldBe(visible, Duration.ofSeconds(15)).getText();
     logger.error("Login failed with error: {}", errorText);
     return errorText;
   }
 
   public void typeValidName() {
-    String username = ConfigManager.get("username");
-    String password = ConfigManager.get("password");
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    wait.until(ExpectedConditions.visibilityOf(usernameInput));
-    usernameInput.sendKeys(username);
-    wait.until(ExpectedConditions.visibilityOf(passwordInput));
-    passwordInput.sendKeys(password);
+    User validUser = new User(ConfigManager.get("username"), ConfigManager.get("password"));
+    usernameInput.shouldBe(visible).setValue(validUser.getUsername());
+    highlightElement(usernameInput);
+    passwordInput.shouldBe(visible).setValue(validUser.getPassword());
+    highlightElement(passwordInput);
     logger.info("Login happened");
   }
 

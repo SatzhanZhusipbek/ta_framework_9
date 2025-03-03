@@ -13,9 +13,11 @@ public class ConfigManager {
   }
 
   private static void loadProperties() {
-    String env = System.getProperty("env", "dev"); // Default to 'dev' if no env is specified
-    String propertiesFilePath = "src/main/resources/config/" + env + ".properties";
-
+    String env = System.getProperty("env");
+    if (env == null || env.isEmpty()) {
+      throw new RuntimeException("Environment variable 'env' is not set. Ensure it's passed via TestNG.");
+    }
+    String propertiesFilePath = "src/main/resources/" + env + ".properties";
     try (FileInputStream fis = new FileInputStream(propertiesFilePath)) {
       properties.load(fis);
       System.out.println("Loaded environment: " + env);
@@ -25,6 +27,10 @@ public class ConfigManager {
   }
 
   public static String get(String key) {
+    String systemValue = System.getProperty(key);
+    if (systemValue != null && !systemValue.isEmpty()) {
+      return systemValue;
+    }
     return properties.getProperty(key);
   }
 
