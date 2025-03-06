@@ -20,12 +20,6 @@ public class SauceLoginPage extends SauceBasePage{
   private final SelenideElement loginButton = $("#login-button");
   private final SelenideElement errorMessage = $(".error-message-container.error");
 
-  public void openPage() {
-    open(ConfigManager.get("baseUrl"));
-    logger.info("Navigated to Login Page");
-    usernameInput.shouldBe(visible);
-  }
-
   public void typeAnyCred() {
     User anyUser = new User(ConfigManager.get("username"), ConfigManager.get("password"));
     usernameInput.shouldBe(visible).setValue(anyUser.getUsername());

@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Regression Test Suite">
   <parameter name="browser" value="firefox"/>
-  <parameter name="env" value="staging"/>
+  <parameter name="environment" value="staging"/>
 
   <test name="Login Regression Test">
     <classes>
