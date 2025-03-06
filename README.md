@@ -31,6 +31,7 @@ through the use of *ConfigLoader* strategy interface.
 - **Observer** - listens for test failures, logs errors and takes screenshots -> implemented
 in *TestsListener*.
 
+---
 ## **Tests**
 
 ### How to Run the Smoke Test
