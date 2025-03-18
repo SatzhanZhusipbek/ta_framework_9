@@ -1,13 +1,11 @@
 <configuration>
 
-  <!-- Console Appender (Logs to Console) -->
   <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
       <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
     </encoder>
   </appender>
 
-  <!-- File Appender (Logs to a File) -->
   <appender name="File" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>logs/test-execution.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -19,10 +17,23 @@
     </encoder>
   </appender>
 
-  <!-- Root Logger Configuration -->
-  <root level="info">
+  <appender name="ReportPortalAppender" class="com.epam.reportportal.logback.appender.ReportPortalAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%t] %-5level - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="com.epam" level="DEBUG" additivity="false">
     <appender-ref ref="Console"/>
     <appender-ref ref="File"/>
+    <appender-ref ref="ReportPortalAppender"/>
+  </logger>
+
+  <root level="INFO">
+    <appender-ref ref="Console"/>
+    <appender-ref ref="File"/>
+    <appender-ref ref="ReportPortalAppender"/>
   </root>
 
 </configuration>
+

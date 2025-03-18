@@ -4,18 +4,25 @@ import java.util.List;
 import java.util.Set;
 import org.jspecify.annotations.Nullable;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class WebDriverDecorator implements WebDriver {
+public class WebDriverDecorator implements WebDriver, TakesScreenshot {
 
   protected final WebDriver driver;
   private static final Logger logger = LoggerFactory.getLogger(WebDriverDecorator.class);
 
   public WebDriverDecorator(WebDriver driver) {
     this.driver = driver;
+  }
+
+  public WebDriver getOriginalDriver() {
+    return this.driver;
   }
 
   @Override
@@ -85,6 +92,15 @@ public class WebDriverDecorator implements WebDriver {
   @Override
   public Options manage() {
     return driver.manage();
+  }
+
+  @Override
+  public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
+    if (driver instanceof TakesScreenshot) {
+      return ((TakesScreenshot) driver).getScreenshotAs(target);
+    } else {
+      throw new WebDriverException("Driver does not support screenshots.");
+    }
   }
 }
 

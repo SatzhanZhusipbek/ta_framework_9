@@ -1,6 +1,6 @@
 # **Practice Task from Modules 9 and 10**
-The Test Automation Framework was built using *TestNG*, *Selenide*, *Selenium*, *Maven* and 
-*WebDriverManager*.
+The Test Automation Framework was built using *TestNG*, *Selenide*, *Selenium*, *Maven*, 
+*WebDriverManager* and *Cucumber*.
 
 ---
 
@@ -16,7 +16,7 @@ The Test Automation Framework was built using *TestNG*, *Selenide*, *Selenium*, 
 - **Screenshot Capture** - Screenshots that are taken on test failures with logs.
 - **Element Highlighting** - Important elements are emphasized during test execution.
 - **SOLID Principles** - the project follows the principles. 
-
+- **Cucumber BDD** - the project implements the BDD using step definitions and a feature file.
 ---
 ## **Design Patterns**
 
@@ -47,6 +47,11 @@ mvn clean test -DsuiteXmlFile="src/test/resources/suites/regression.xml"
 ### How to Run two Tests concurrently
 ```bash
 mvn clean test -DsuiteXmlFile="src/test/resources/testng.xml"
+```
+
+### How to Run the Cucumber Test
+```bash
+mvn clean test -DsuiteXmlFile="src/test/resources/cucumber.xml"
 ```
 
 ## **Environments & Browsers**

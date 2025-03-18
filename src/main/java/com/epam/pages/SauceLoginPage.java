@@ -20,15 +20,14 @@ public class SauceLoginPage extends SauceBasePage{
   private final SelenideElement loginButton = $("#login-button");
   private final SelenideElement errorMessage = $(".error-message-container.error");
 
-  public void typeAnyCred() {
-    User anyUser = new User(ConfigManager.get("username"), ConfigManager.get("password"));
-    usernameInput.shouldBe(visible).setValue(anyUser.getUsername());
+  public void typeAnyCred(String username, String password) {
+    usernameInput.shouldBe(visible).setValue(username);
     highlightElement(usernameInput);
     usernameInput.sendKeys(Keys.chord(Keys.CONTROL, "a"));
     usernameInput.sendKeys(Keys.BACK_SPACE);
-    passwordInput.shouldBe(visible).setValue(anyUser.getPassword());
+    passwordInput.shouldBe(visible).setValue(password);
     highlightElement(passwordInput);
-    logger.info("Entered credentials: Username = {}, Password = [HIDDEN]", anyUser.getUsername());
+    logger.info("Entered credentials: Username = {}, Password = [HIDDEN]", username);
   }
 
   public SauceInventoryPage pressLoginButton() {
@@ -44,11 +43,10 @@ public class SauceLoginPage extends SauceBasePage{
     return errorText;
   }
 
-  public void typeValidName() {
-    User validUser = new User(ConfigManager.get("username"), ConfigManager.get("password"));
-    usernameInput.shouldBe(visible).setValue(validUser.getUsername());
+  public void typeValidName(String username, String password) {
+    usernameInput.shouldBe(visible).setValue(username);
     highlightElement(usernameInput);
-    passwordInput.shouldBe(visible).setValue(validUser.getPassword());
+    passwordInput.shouldBe(visible).setValue(password);
     highlightElement(passwordInput);
     logger.info("Login happened");
   }
