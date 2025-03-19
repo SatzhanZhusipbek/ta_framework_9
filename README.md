@@ -16,6 +16,7 @@ The Test Automation Framework was built using *TestNG*, *Selenide*, *Selenium*, 
 - **Screenshot Capture** - Screenshots that are taken on test failures with logs.
 - **Element Highlighting** - Important elements are emphasized during test execution.
 - **SOLID Principles** - the project follows the principles. 
+- **Report Portal** - the project sends logs and screenshots to report portal.
 - **Cucumber BDD** - the project implements the BDD using step definitions and a feature file.
 ---
 ## **Design Patterns**
