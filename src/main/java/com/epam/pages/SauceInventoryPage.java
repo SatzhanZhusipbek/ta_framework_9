@@ -4,13 +4,13 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
 import com.codeborne.selenide.SelenideElement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class SauceInventoryPage extends SauceBasePage{
 
-  private static final Logger logger = LoggerFactory.getLogger(SauceInventoryPage.class);
+  private static final Logger logger = LogManager.getLogger(SauceInventoryPage.class);
 
   private final SelenideElement logoElement = $(".app_logo");
 

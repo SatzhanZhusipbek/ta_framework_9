@@ -2,13 +2,13 @@ package com.epam.utils;
 
 import java.util.Objects;
 import org.openqa.selenium.WebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import com.epam.driver.DriverFactory;
 
 public class DriverManager {
 
-  private static final Logger logger = LoggerFactory.getLogger(DriverManager.class);
+  private static final Logger logger = LogManager.getLogger(DriverManager.class);
   private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
 
   private DriverManager() {

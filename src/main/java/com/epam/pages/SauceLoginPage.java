@@ -2,19 +2,16 @@ package com.epam.pages;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
 
 import com.codeborne.selenide.SelenideElement;
-import com.epam.model.User;
-import com.epam.utils.ConfigManager;
 import java.time.Duration;
 import org.openqa.selenium.Keys;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class SauceLoginPage extends SauceBasePage{
 
-  private static final Logger logger = LoggerFactory.getLogger(SauceLoginPage.class);
+  private static final Logger logger = LogManager.getLogger(SauceLoginPage.class);
   private final SelenideElement usernameInput = $("#user-name");
   private final SelenideElement passwordInput = $("#password");
   private final SelenideElement loginButton = $("#login-button");

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout>
+        <Pattern>%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n</Pattern>
+      </PatternLayout>
+    </Console>
+
+    <RollingFile name="FileLogger" fileName="logs/test.log"
+      filePattern="logs/test-%d{yyyy-MM-dd}.log.gz">
+      <PatternLayout>
+        <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n</Pattern>
+      </PatternLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+      </Policies>
+    </RollingFile>
+
+    <ReportPortalLog4j2Appender name="ReportPortalAppender" async="true">
+      <PatternLayout>
+        <Pattern>%msg%n</Pattern>
+      </PatternLayout>
+    </ReportPortalLog4j2Appender>
+  </Appenders>
+
+  <Loggers>
+    <Logger name="com.epam.reportportal" level="debug" additivity="false">
+      <AppenderRef ref="ReportPortalAppender"/>
+    </Logger>
+
+    <Root level="info">
+      <AppenderRef ref="Console"/>
+      <AppenderRef ref="FileLogger"/>
+      <AppenderRef ref="ReportPortalAppender"/>
+    </Root>
+  </Loggers>
+</Configuration>

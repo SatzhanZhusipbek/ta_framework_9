@@ -3,12 +3,12 @@ package com.epam.utils;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class FileConfigLoader implements ConfigLoader {
 
-  private static final Logger logger = LoggerFactory.getLogger(FileConfigLoader.class);
+  private static final Logger logger = LogManager.getLogger(FileConfigLoader.class);
 
   @Override
   public Properties load() {
