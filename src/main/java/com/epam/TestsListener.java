@@ -1,5 +1,6 @@
 package com.epam;
 
+import com.epam.reportportal.service.ReportPortal;
 import com.epam.reportportal.testng.ReportPortalTestNGListener;
 import com.epam.utils.ConfigManager;
 import com.epam.utils.DriverManager;
@@ -9,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Calendar;
 import java.util.Date;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -35,15 +37,8 @@ public class TestsListener extends ReportPortalTestNGListener {
     if (screenshotPath != null) {
       File screenshotFile = new File(screenshotPath);
       if (screenshotFile.exists()) {
-        try {
-          byte[] fileContent = Files.readAllBytes(Paths.get(screenshotPath));
-          String base64Screenshot = Base64.getEncoder().encodeToString(fileContent);
-
-          logger.info("RP_MESSAGE#BASE64#{}#{}", base64Screenshot, "Failure Screenshot");
-        } catch (IOException e) {
-          throw new RuntimeException(e);
-        }
-
+        ReportPortal.emitLog("Failure Screenshot", "INFO",
+            Calendar.getInstance().getTime(), screenshotFile);
       } else {
         logger.error("Screenshot file not found: " + screenshotPath);
       }
